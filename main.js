@@ -3,7 +3,7 @@ const { app, BrowserWindow, Menu } = require('electron');
 
 // Check if we in development mode.
 const isDevMode = process.env.NODE_ENV !== 'production';
-// Check if we on Mac.
+// Check if we on MacOS.
 const isMacOS = process.platform === 'darwin';
 
 // function that creates a window.
@@ -28,9 +28,6 @@ const createMainWindow = () => {
 app.on('ready', () => {
   createMainWindow();
 
-  // Custom window menu implementation.
-  const customMenu = Menu.buildFromTemplate(menu);
-
   // Connect custom menu to app.
   Menu.setApplicationMenu(customMenu);
 
@@ -42,8 +39,8 @@ app.on('ready', () => {
   });
 });
 
-// Custom window menu template.
-const menu = [
+// Implementation of custom window menu from our template.
+const customMenu = Menu.buildFromTemplate([
   {
     label: 'File',
     submenu: [
@@ -54,7 +51,7 @@ const menu = [
       },
     ]
   },
-]
+]);
 
 // This part for MacOS.
 app.on('window-all-closed', () => {
