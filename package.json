@@ -1,0 +1,21 @@
+{
+  "name": "electron-image-resizer",
+  "productName": "ImageResizer",
+  "version": "1.0.0",
+  "description": "App to resize dimensions of the image.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "nodemon --watch . --exec \"electron .\""
+  },
+  "author": "Sholastix",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^32.0.1",
+    "jimp": "^0.22.12",
+    "toastify-js": "^1.12.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
