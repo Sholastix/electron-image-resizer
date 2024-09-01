@@ -26,6 +26,7 @@ const createMainWindow = () => {
 // Function that creates an 'About' window.
 const createAboutWindow = () => {
   const aboutWindow = new BrowserWindow({
+    autoHideMenuBar: true,
     title: 'About ImageReziser',
     width: 360,
     height: 240
