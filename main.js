@@ -6,7 +6,7 @@ const isDevMode = process.env.NODE_ENV !== 'production';
 // Check if we on MacOS.
 const isMacOS = process.platform === 'darwin';
 
-// function that creates a window.
+// Function that creates a window.
 const createMainWindow = () => {
   const mainWindow = new BrowserWindow({
     // titleBarStyle: "hidden",
@@ -23,6 +23,8 @@ const createMainWindow = () => {
   // Load file that will be opened in 'electron' window.
   mainWindow.loadFile(path.join(__dirname, './renderer/index.html'));
 };
+
+// Create 'About' window.
 
 // Launches when app is ready.
 app.on('ready', () => {
@@ -41,16 +43,44 @@ app.on('ready', () => {
 
 // Implementation of custom window menu from our template.
 const customMenu = Menu.buildFromTemplate([
+  // This part for MacOS.
+  ...(isMacOS
+    ?
+    [{
+      label: app.name,
+      submenu: [
+        {
+          label: 'About',
+        },
+      ]
+    }]
+    :
+    []),
+
   {
     label: 'File',
     submenu: [
       {
         label: 'Quit',
+        // We can replace that function with integrated shortcut "role: 'quit'"  
         click: () => app.quit(),
-        accelerator: 'Ctrl+Q'
+        accelerator: 'Ctrl+Q',
       },
     ]
   },
+
+  ...(!isMacOS
+    ?
+    [{
+      label: 'Help',
+      submenu: [
+        {
+          label: 'About'
+        },
+      ]
+    }]
+    :
+    [])
 ]);
 
 // This part for MacOS.
