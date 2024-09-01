@@ -6,11 +6,10 @@ const isDevMode = process.env.NODE_ENV !== 'production';
 // Check if we on MacOS.
 const isMacOS = process.platform === 'darwin';
 
-// Function that creates a window.
+// Function that creates an 'Main' window.
 const createMainWindow = () => {
   const mainWindow = new BrowserWindow({
-    // titleBarStyle: "hidden",
-    title: "ImageReziser",
+    title: 'ImageReziser',
     width: 720,
     height: 480
   });
@@ -24,7 +23,16 @@ const createMainWindow = () => {
   mainWindow.loadFile(path.join(__dirname, './renderer/index.html'));
 };
 
-// Create 'About' window.
+// Function that creates an 'About' window.
+const createAboutWindow = () => {
+  const aboutWindow = new BrowserWindow({
+    title: 'About ImageReziser',
+    width: 360,
+    height: 240
+  });
+
+  aboutWindow.loadFile(path.join(__dirname, './renderer/about.html'));
+};
 
 // Launches when app is ready.
 app.on('ready', () => {
@@ -51,6 +59,7 @@ const customMenu = Menu.buildFromTemplate([
       submenu: [
         {
           label: 'About',
+          click: createAboutWindow          
         },
       ]
     }]
@@ -75,7 +84,8 @@ const customMenu = Menu.buildFromTemplate([
       label: 'Help',
       submenu: [
         {
-          label: 'About'
+          label: 'About',
+          click: createAboutWindow             
         },
       ]
     }]
