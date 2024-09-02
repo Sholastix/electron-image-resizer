@@ -11,7 +11,12 @@ const createMainWindow = () => {
   const mainWindow = new BrowserWindow({
     title: 'ImageReziser',
     width: 720,
-    height: 480
+    height: 480,
+    webPreferences: {
+      contextIsolation: true,
+      nodeIntegration: true,
+      preload: path.join(__dirname, 'preload.js')
+    }
   });
 
   // Automatically opens devTools if we in development mode.

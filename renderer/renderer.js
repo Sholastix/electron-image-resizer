@@ -29,6 +29,8 @@ const loadImage = (event) => {
 
     // Display name of selected file in our form.
     filename.innerText = file.name;
+    // Display output path for modified file.
+    outputPath.innerText = path.join(os.homedir(), 'ImageResizer');
 
     // Display initial dimensions of selected file.
     const image = new Image();
