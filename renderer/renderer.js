@@ -15,6 +15,41 @@ const isImage = (file) => {
   };
 };
 
+// Function to display alerts.
+const alertError = (message) => {
+  try {
+    Toastify.toast({
+      text: message,
+      duration: 5000,
+      close: false, // show or hide 'close' button.
+      style: {
+        backgroundColor: 'red',
+        color: 'white',
+        textAlign: 'center'
+      },
+    });
+  } catch (err) {
+    console.error(err);
+  };
+};
+
+const alertSuccess = (message) => {
+  try {
+    Toastify.toast({
+      text: message,
+      duration: 5000,
+      close: false, // show or hide 'close' button.
+      style: {
+        backgroundColor: 'green',
+        color: 'white',
+        textAlign: 'center'
+      },
+    });
+  } catch (err) {
+    console.error(err);
+  };
+};
+
 // Function for image loading.
 const loadImage = (event) => {
   try {
@@ -23,6 +58,7 @@ const loadImage = (event) => {
     console.log('IS_IMAGE: ', isImage(file));
 
     if (!isImage(file)) {
+      alertError('Please select an image.');
       console.log('Please select an image.');
       return;
     };
@@ -35,12 +71,12 @@ const loadImage = (event) => {
     // Display initial dimensions of selected file.
     const image = new Image();
     image.src = URL.createObjectURL(file);
-    
+
     image.onload = function () {
       widthInput.value = this.width,
-      heightInput.value = this.height
+        heightInput.value = this.height
     };
-  
+
     console.log('SUCCESS!');
   } catch (err) {
     console.error(err);
