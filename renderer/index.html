@@ -4,15 +4,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="Content-Security-Policy" content="script-src 'self'"/>
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self'" />
   <link rel="stylesheet" href="./styles.css">
   <script src="./renderer.js" defer></script>
   <title>ImageResizer</title>
 </head>
 
 <body>
-  <div>
-    <input id="image" type="file" class="hidden">
+  <div class="container">
+    <div class="select-image-area">
+      <input class="image-select" type="file">
+    </div>
+
+    <form id="image-form">
+      <div>
+        <input id="width" type="number" placeholder="Width...">
+      </div>
+
+      <div>
+        <input id="height" type="number" placeholder="Height...">
+      </div>
+
+      <div>
+        <button class="image-resize">Resize</button>
+      </div>
+    </form>
+
+    <p class="info">File: <span id="filename"></span></p>
+    <p class="info">Output: <span id="output-path"></span></p>
   </div>
 </body>
 

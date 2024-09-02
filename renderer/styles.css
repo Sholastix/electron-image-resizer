@@ -10,5 +10,35 @@ html {
 }
 
 .container {
+  align-items: center;
   background-color: silver;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: center;
+  padding: 2rem;
+  width: 100vw;
+}
+
+.container input {
+  margin-bottom: 2rem;
+}
+
+.select-image-area {
+  /* background-color: white; */
+}
+
+.image-select {
+  /* opacity: 0; */
+}
+
+.image-resize {
+  cursor: pointer;
+  margin-bottom: 1rem;
+}
+
+.info {
+  align-self: flex-start;
+  font-size: 1.4rem;
+  margin-top: 1rem;
 }
