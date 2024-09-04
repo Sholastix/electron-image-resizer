@@ -2,6 +2,7 @@ const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const { app, BrowserWindow, Menu, ipcMain } = require('electron');
+const jimp = require('jimp');
 
 // Check if we in development mode.
 const isDevMode = process.env.NODE_ENV !== 'production';
@@ -67,7 +68,7 @@ const customMenu = Menu.buildFromTemplate([
       submenu: [
         {
           label: 'About',
-          click: createAboutWindow          
+          click: createAboutWindow
         },
       ]
     }]
@@ -93,7 +94,7 @@ const customMenu = Menu.buildFromTemplate([
       submenu: [
         {
           label: 'About',
-          click: createAboutWindow             
+          click: createAboutWindow
         },
       ]
     }]
@@ -102,15 +103,24 @@ const customMenu = Menu.buildFromTemplate([
 ]);
 
 // Function to resize image.
-const resizeImage = () => {
-
+const resizeImage = async (options) => {
+  try {
+    // Read the image.
+    const image = await jimp.read(options.imgPath);
+    // Resize image.
+    image.resize(Number(options.width), Number(options.height));
+    // Save resized image with new name.
+    const newName = options.name.split('.')[0] + '_' + `${options.width}x${options.height}` + '.' + options.name.split('.')[1];
+    image.write(options.destination + `/${newName}`);
+  } catch (err) {
+    console.error(err);
+  };
 };
 
-// Response to ipcRenderer resize.
+// Response to ipcRenderer resize event.
 ipcMain.on('resize', (event, options) => {
   // Here we adding final destination for resized image to 'options' object.
   options.destination = path.join(os.homedir(), 'ImageReziser');
-  console.log(options)
   resizeImage(options);
 });
 

@@ -87,10 +87,11 @@ const sendImage = (event) => {
       return;
     };
 
-    const width = widthInput.value;
-    const height = heightInput.value;
     // Get path to source file.
     const imgPath = electron.pathToFile(img.files[0]);
+    const name = filename.innerText;
+    const width = widthInput.value;
+    const height = heightInput.value;
 
     if (width === '' || height === '') {
       alertError('Width and height are required.');
@@ -100,9 +101,12 @@ const sendImage = (event) => {
     // Send image data to main process with ipcRenderer.
     ipcRenderer.send('resize', {
       imgPath,
+      name,
       width,
-      height
+      height,
     });
+
+    alertSuccess('Image resized.')
   } catch (err) {
     console.error(err);
   };
