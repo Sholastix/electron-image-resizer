@@ -1,7 +1,7 @@
 const os = require('os');
 const path = require('path');
 const Toastify = require('toastify-js');
-const { contextBridge } = require('electron');
+const { contextBridge, webUtils, ipcRenderer } = require('electron');
 
 contextBridge.exposeInMainWorld('os', {
   homedir: () => os.homedir(),
@@ -13,4 +13,13 @@ contextBridge.exposeInMainWorld('path', {
 
 contextBridge.exposeInMainWorld('Toastify', {
   toast: (options) => Toastify(options).showToast(),
+});
+
+contextBridge.exposeInMainWorld('electron', {
+  pathToFile: (data) => webUtils.getPathForFile(data),
+});
+
+contextBridge.exposeInMainWorld('ipcRenderer', {
+  send: (channel, data) => ipcRenderer.send(channel, data),
+  on: (channel, func) => ipcRenderer(channel, (event, ...args) => func(...args))
 });

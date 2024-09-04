@@ -1,4 +1,4 @@
-const img = document.querySelector('#image');
+const img = document.querySelector('#img');
 const form = document.querySelector('#form');
 const widthInput = document.querySelector('#width');
 const heightInput = document.querySelector('#height');
@@ -50,11 +50,10 @@ const alertSuccess = (message) => {
   };
 };
 
-// Function for image loading.
+// Load image.
 const loadImage = (event) => {
   try {
     const file = event.target.files[0];
-    console.log('SELECTED_FILE: ', file);
 
     if (!isImage(file)) {
       alertError('Please select an image.');
@@ -78,5 +77,39 @@ const loadImage = (event) => {
   };
 };
 
+// Send image for resizing.
+const sendImage = (event) => {
+  try {
+    event.preventDefault();
+
+    if (!img.files[0]) {
+      alertError('Please upload an image first.');
+      return;
+    };
+
+    const width = widthInput.value;
+    const height = heightInput.value;
+    // Get path to source file.
+    const imgPath = electron.pathToFile(img.files[0]);
+
+    if (width === '' || height === '') {
+      alertError('Width and height are required.');
+      return;
+    };
+
+    // Send image data to main process with ipcRenderer.
+    ipcRenderer.send('resize', {
+      imgPath,
+      width,
+      height
+    });
+  } catch (err) {
+    console.error(err);
+  };
+};
+
 // Set event listener to image loading.
-image.addEventListener('change', loadImage);
+img.addEventListener('change', loadImage);
+
+// Set event listener to submit image for resizing.
+form.addEventListener('submit', sendImage);

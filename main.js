@@ -1,5 +1,7 @@
+const os = require('os');
+const fs = require('fs');
 const path = require('path');
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 
 // Check if we in development mode.
 const isDevMode = process.env.NODE_ENV !== 'production';
@@ -98,6 +100,19 @@ const customMenu = Menu.buildFromTemplate([
     :
     [])
 ]);
+
+// Function to resize image.
+const resizeImage = () => {
+
+};
+
+// Response to ipcRenderer resize.
+ipcMain.on('resize', (event, options) => {
+  // Here we adding final destination for resized image to 'options' object.
+  options.destination = path.join(os.homedir(), 'ImageReziser');
+  console.log(options)
+  resizeImage(options);
+});
 
 // This part for MacOS.
 app.on('window-all-closed', () => {
