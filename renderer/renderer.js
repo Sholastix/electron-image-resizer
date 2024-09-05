@@ -89,7 +89,6 @@ const sendImage = (event) => {
 
     // Get path to source file.
     const imgPath = electron.pathToFile(img.files[0]);
-    const name = filename.innerText;
     const width = widthInput.value;
     const height = heightInput.value;
 
@@ -101,7 +100,6 @@ const sendImage = (event) => {
     // Send image data to main process with ipcRenderer.
     ipcRenderer.send('resize', {
       imgPath,
-      name,
       width,
       height,
     });
