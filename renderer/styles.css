@@ -11,9 +11,10 @@ html {
 
 
 /* 'MAIN' WINDOW */
-.container {
+.container-main {
   align-items: center;
   background-color: rgb(93, 109, 126);
+  color: white;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -22,21 +23,61 @@ html {
   width: 100vw;
 }
 
-.container input {
+#form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
   margin-bottom: 2rem;
+  width: 30rem;
+}
+
+.form-input input {
+  border-radius: 0.5rem;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+}
+
+.form-input input:focus {
+  outline: none;
 }
 
 .select-image-area {
-  /* background-color: white; */
+  margin-bottom: 5rem;
 }
 
 .image-select {
-  /* opacity: 0; */
+  background-color: white;
+  border-radius: 3rem;
+  font-size: 2rem;
+  padding: 0.5rem;
 }
 
-.image-resize {
+.image-select:hover {
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
   cursor: pointer;
-  margin-bottom: 1rem;
+}
+
+.button-image-resize {
+  background-color: white;
+  border-radius: 3rem;
+  cursor: pointer;
+  font-size: 2rem;
+  margin-bottom: 5rem;
+  padding: 0.5rem;
+  width: 30rem;
+}
+
+.button-image-resize:hover {
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
+}
+
+.button-image-resize:active {
+  background-color: greenyellow;
 }
 
 .info {
