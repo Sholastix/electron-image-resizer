@@ -9,9 +9,11 @@ html {
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
+
+/* 'MAIN' WINDOW */
 .container {
   align-items: center;
-  background-color: silver;
+  background-color: rgb(93, 109, 126);
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -41,4 +43,31 @@ html {
   align-self: flex-start;
   font-size: 1.4rem;
   margin-top: 1rem;
+}
+
+
+/* 'ABOUT' WINDOW */
+.container-about {
+  align-items: center;
+  background-color: rgb(93, 109, 126);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  padding: 2rem;
+}
+
+.name-about {
+  font-size: 3rem;
+  margin-bottom: 3rem;
+}
+
+.info-about {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.copyright-about {
+  margin-top: 2rem;
 }
