@@ -8,9 +8,11 @@ const isDevMode = process.env.NODE_ENV !== 'production';
 // Check if we on MacOS.
 const isMacOS = process.platform === 'darwin';
 
+let mainWindow;
+
 // Function that creates an 'Main' window.
 const createMainWindow = () => {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     title: 'ImageReziser',
     width: 720,
     height: 480,
@@ -48,6 +50,11 @@ app.on('ready', () => {
 
   // Connect custom menu to app.
   Menu.setApplicationMenu(customMenu);
+
+  // Remove main window from memory on close (to prevent memory leak).
+  mainWindow.on('closed', () => { 
+    mainWindow = null 
+  });
 
   // This part for MacOS.
   app.on('activate', () => {
@@ -114,6 +121,8 @@ const resizeImage = async (options) => {
     const newName = originalFilename.split('.')[0] + '_' + `${options.width}x${options.height}` + '.' + originalFilename.split('.')[1];
     // Save resized image with new filename.
     image.write(options.destination + `/${newName}`);
+    // Send 'success' event to the renderer.
+    mainWindow.webContents.send('done');
     // Open destination folder with saved image (we can do this with "electron" built-in method 'shell').
     shell.openPath(options.destination);
   } catch (err) {
