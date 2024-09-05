@@ -1,6 +1,6 @@
 const os = require('os');
 const path = require('path');
-const { app, BrowserWindow, Menu, ipcMain } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain, shell } = require('electron');
 const jimp = require('jimp');
 
 // Check if we in development mode.
@@ -114,6 +114,8 @@ const resizeImage = async (options) => {
     const newName = originalFilename.split('.')[0] + '_' + `${options.width}x${options.height}` + '.' + originalFilename.split('.')[1];
     // Save resized image with new filename.
     image.write(options.destination + `/${newName}`);
+    // Open destination folder with saved image (we can do this with "electron" built-in method 'shell').
+    shell.openPath(options.destination);
   } catch (err) {
     console.error(err);
   };
