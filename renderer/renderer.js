@@ -20,11 +20,13 @@ const alertError = (message) => {
   try {
     Toastify.toast({
       text: message,
-      duration: 5000,
+      duration: 3000,
       close: false, // show or hide 'close' button.
       style: {
         backgroundColor: 'red',
         color: 'white',
+        fontSize: '1.6rem',
+        padding: '0.5rem',
         textAlign: 'center'
       },
     });
@@ -37,11 +39,13 @@ const alertSuccess = (message) => {
   try {
     Toastify.toast({
       text: message,
-      duration: 5000,
+      duration: 3000,
       close: false,
       style: {
         backgroundColor: 'green',
         color: 'white',
+        fontSize: '1.6rem',
+        padding: '0.5rem',
         textAlign: 'center'
       },
     });

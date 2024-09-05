@@ -9,6 +9,10 @@ html {
   font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
+body {
+  overflow: hidden;
+}
+
 
 /* 'MAIN' WINDOW */
 .container-main {
@@ -21,6 +25,18 @@ html {
   justify-content: center;
   padding: 2rem;
   width: 100vw;
+}
+
+.select-image-area {
+  margin-bottom: 3rem;
+}
+
+.select-image {
+  font-size: 5rem;
+}
+
+.select-image:hover {
+  cursor: pointer;
 }
 
 #form {
@@ -44,18 +60,6 @@ html {
 
 .form-input input:focus {
   outline: none;
-}
-
-.select-image-area {
-  margin-bottom: 5rem;
-}
-
-.image-select {
-  font-size: 5rem;
-}
-
-.image-select:hover {
-  cursor: pointer;
 }
 
 .button-image-resize {
