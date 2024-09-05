@@ -51,14 +51,10 @@ html {
 }
 
 .image-select {
-  background-color: white;
-  border-radius: 3rem;
-  font-size: 2rem;
-  padding: 0.5rem;
+  font-size: 5rem;
 }
 
 .image-select:hover {
-  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
 
