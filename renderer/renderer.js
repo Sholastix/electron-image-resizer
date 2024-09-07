@@ -110,7 +110,10 @@ const sendImage = (event) => {
 
     // Catch 'success' event from the 'resizeImage()' function of the main process.
     ipcRenderer.on('done', () => {
-      alertSuccess('Image resized.')
+      // Display alert to user.
+      alertSuccess('Image resized.');
+      // Remove event listener (to prevent 'alertSuccess' messages multiplying).
+      ipcRenderer.removeAllListeners('done');
     });
   } catch (err) {
     console.error(err);
