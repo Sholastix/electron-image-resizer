@@ -16,6 +16,7 @@ const createMainWindow = () => {
     title: 'ImageReziser',
     width: 720,
     height: 480,
+    resizable: false,
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: true,
@@ -38,7 +39,8 @@ const createAboutWindow = () => {
     autoHideMenuBar: true,
     title: 'About ImageReziser',
     width: 360,
-    height: 240
+    height: 240,
+    resizable: false
   });
 
   aboutWindow.loadFile(path.join(__dirname, './renderer/about.html'));
