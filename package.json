@@ -3,7 +3,7 @@
   "productName": "ImageResizer",
   "version": "1.0.0",
   "description": "App to resize dimensions of the image.",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
     "start": "electron .",
     "dev": "nodemon --watch . --exec \"electron .\""
