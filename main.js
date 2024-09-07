@@ -54,8 +54,8 @@ app.on('ready', () => {
   Menu.setApplicationMenu(customMenu);
 
   // Remove main window from memory on close (to prevent memory leak).
-  mainWindow.on('closed', () => { 
-    mainWindow = null 
+  mainWindow.on('closed', () => {
+    mainWindow = null
   });
 
   // This part for MacOS.
@@ -107,7 +107,21 @@ const customMenu = Menu.buildFromTemplate([
       ]
     }]
     :
-    [])
+    []),
+
+  ...(isDevMode
+    ? [
+      {
+        label: 'Developer',
+        submenu: [
+          { role: 'reload' },
+          { role: 'forcereload' },
+          { type: 'separator' },
+          { role: 'toggledevtools' },
+        ],
+      },
+    ]
+    : []),
 ]);
 
 // Function to resize image.
