@@ -8,7 +8,25 @@
     "start": "electron-forge start",
     "dev": "nodemon --watch . --exec \"electron .\"",
     "package": "electron-forge package",
-    "make": "electron-forge make"
+    "make": "electron-forge make",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "ImageResizer",
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "assets/icons/icon.ico"
+    },
+    "nsis": {
+      "oneClick": "false",
+      "installerIcon": "assets/icons/icon.ico",
+      "uninstallerIcon": "assets/icons/icon.ico",
+      "uninstallDisplayName": "ImageResize",
+      "license": "license.md",
+      "allowToChangeInstallationDirectory": "true"
+    }
   },
   "author": "Sholastix",
   "license": "ISC",
@@ -27,6 +45,7 @@
     "@electron-forge/plugin-fuses": "^7.4.0",
     "@electron/fuses": "^1.8.0",
     "electron": "^32.0.1",
+    "electron-builder": "^25.0.5",
     "nodemon": "^3.1.4"
   }
 }
