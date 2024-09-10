@@ -146,8 +146,8 @@ const resizeImage = async (options) => {
     image.write(options.destination + `/${newName}`);
     // Send 'success' event to the renderer.
     mainWindow.webContents.send('done');
-    // Open destination folder with saved image (we can do this with "electron" built-in method 'shell').
-    shell.openPath(options.destination);
+    // Open destination folder with saved image (we can do this with "electron" built-in module 'shell').
+    shell.showItemInFolder(options.destination + `/${newName}`);
   } catch (err) {
     console.error(err);
   };
