@@ -3,9 +3,6 @@ const path = require('path');
 const { app, BrowserWindow, Menu, ipcMain, shell } = require('electron');
 const jimp = require('jimp');
 
-// Prevent opening of the application during the installation.
-if (require('electron-squirrel-startup')) app.quit();
-
 // Set environment.
 process.env.NODE_ENV = 'production';
 
