@@ -54,6 +54,25 @@ const alertSuccess = (message) => {
   };
 };
 
+const alertInfo = (message) => {
+  try {
+    Toastify.toast({
+      text: message,
+      duration: 3000,
+      close: false,
+      style: {
+        backgroundColor: 'orange',
+        color: 'white',
+        fontSize: '1.6rem',
+        padding: '0.5rem',
+        textAlign: 'center'
+      },
+    });
+  } catch (err) {
+    console.error(err);
+  };
+};
+
 // Load image.
 const loadImage = (event) => {
   try {
@@ -119,6 +138,14 @@ const sendImage = (event) => {
     console.error(err);
   };
 };
+
+ipcRenderer.on('checking-for-update', () => {
+  alertInfo('Checking for update...');
+});
+
+// ipcRenderer.on('update-downloaded', () => {
+//   alertInfo('Application updated.');
+// });
 
 // Set event listener to image loading.
 img.addEventListener('change', loadImage);

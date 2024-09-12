@@ -1,7 +1,8 @@
 const os = require('os');
 const path = require('path');
-const { app, BrowserWindow, Menu, ipcMain, shell } = require('electron');
 const jimp = require('jimp');
+const { app, BrowserWindow, Menu, ipcMain, shell } = require('electron');
+const { autoUpdater, AppUpdater } = require('electron-updater');
 
 // Set environment.
 process.env.NODE_ENV = 'production';
@@ -13,6 +14,15 @@ const isDevMode = process.env.NODE_ENV !== 'production';
 const isMacOS = process.platform === 'darwin';
 
 let mainWindow;
+
+// -------------------- APP AUTO-UPDATE FLAGS - START --------------------
+
+// Disable update's auto-download (if new update available).
+autoUpdater.autoDownload = false;
+// Enable automatic install of downloaded update on app quit (basically, silent update).
+autoUpdater.autoInstallOnAppQuit = true;
+
+// -------------------- APP AUTO-UPDATE FLAGS - END --------------------
 
 // Function that creates an 'Main' window.
 const createMainWindow = () => {
@@ -54,19 +64,38 @@ const createAboutWindow = () => {
 app.on('ready', () => {
   createMainWindow();
 
-  // Connect custom menu to app.
-  Menu.setApplicationMenu(customMenu);
-
-  // Remove main window from memory on close (to prevent memory leak).
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  });
-
   // This part for MacOS.
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createMainWindow();
     };
+  });
+
+  // Connect custom menu to app.
+  Menu.setApplicationMenu(customMenu);
+
+  // Check for updates on our GitHub repository.
+  // autoUpdater.checkForUpdatesAndNotify();
+  autoUpdater.checkForUpdates();
+
+  autoUpdater.on('checking-for-update', () => {
+    mainWindow.webContents.send('checking-for-update');
+  });
+
+  // autoUpdater.on('update-downloaded', () => {
+  
+  //   mainWindow.webContents.send('update-downloaded');
+  // });
+
+  // autoUpdater.on('update-available', () => {});
+  // autoUpdater.on('update-not-available', () => {});
+  // autoUpdater.on('download-progress', () => {});
+  // autoUpdater.on('update-cancelled', () => {});
+  // autoUpdater.on('error', () => {});
+
+  // Remove main window from memory on close (to prevent memory leak).
+  mainWindow.on('closed', () => {
+    mainWindow = null
   });
 });
 

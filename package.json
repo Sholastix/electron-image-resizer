@@ -9,6 +9,11 @@
     "dev": "nodemon --watch . --exec \"electron .\"",
     "build": "electron-builder"
   },
+  "repository": "https://github.com/Sholastix/electron-image-resizer",
+  "publish": {
+    "provider": "github",
+    "releaseType": "release"
+  },
   "build": {
     "directories": {
       "output": "dist"
@@ -21,10 +26,11 @@
       "icon": "assets/icons/icon.ico"
     },
     "nsis": {
+      "artifactName": "ImageResizer.exe",
       "oneClick": "false",
       "installerIcon": "assets/icons/icon.ico",
       "uninstallerIcon": "assets/icons/icon.ico",
-      "uninstallDisplayName": "ImageResize",
+      "uninstallDisplayName": "ImageResizer",
       "license": "license.md",
       "allowToChangeInstallationDirectory": "true"
     }
