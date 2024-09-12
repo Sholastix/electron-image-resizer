@@ -32,6 +32,7 @@
   "author": "Sholastix",
   "license": "ISC",
   "dependencies": {
+    "electron-updater": "^6.3.4",
     "jimp": "^0.22.12",
     "toastify-js": "^1.12.0"
   },
