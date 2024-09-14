@@ -7,7 +7,8 @@
   "scripts": {
     "start": "electron .",
     "dev": "nodemon --watch . --exec \"electron .\"",
-    "build": "electron-builder"
+    "build": "electron-builder build --win --publish never",
+    "deploy": "electron-builder build --win --publish always"
   },
   "repository": "https://github.com/Sholastix/electron-image-resizer",
   "publish": {
