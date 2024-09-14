@@ -78,26 +78,22 @@ app.on('ready', () => {
   // autoUpdater.checkForUpdatesAndNotify();
   autoUpdater.checkForUpdates();
 
-  autoUpdater.on('checking-for-update', () => {
-    mainWindow.webContents.send('checking-for-update');
-  });
-
-  // autoUpdater.on('update-downloaded', () => {
-  
-  //   mainWindow.webContents.send('update-downloaded');
-  // });
-
-  // autoUpdater.on('update-available', () => {});
-  // autoUpdater.on('update-not-available', () => {});
-  // autoUpdater.on('download-progress', () => {});
-  // autoUpdater.on('update-cancelled', () => {});
-  // autoUpdater.on('error', () => {});
-
   // Remove main window from memory on close (to prevent memory leak).
   mainWindow.on('closed', () => {
     mainWindow = null
   });
 });
+
+autoUpdater.on('checking-for-update', () => {
+  mainWindow.webContents.send('checking-for-update');
+});
+
+// autoUpdater.on('update-available', () => {});
+// autoUpdater.on('update-not-available', () => {});
+// autoUpdater.on('download-progress', () => {});
+// autoUpdater.on('update-downloaded', () => {});
+// autoUpdater.on('update-cancelled', () => {});
+// autoUpdater.on('error', () => {});
 
 // Implementation of custom window menu from our template.
 const customMenu = Menu.buildFromTemplate([
