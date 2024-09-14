@@ -45,6 +45,12 @@ const createMainWindow = () => {
 
   // Load file that will be opened in 'electron' window.
   mainWindow.loadFile(path.join(__dirname, './renderer/index.html'));
+
+  // Automatic check for updates on our GitHub repository.
+  mainWindow.once('ready-to-show', () => {
+    autoUpdater.checkForUpdatesAndNotify();
+    mainWindow.webContents.send('checking-for-update');
+  });
 };
 
 // Function that creates an 'About' window.
@@ -74,24 +80,26 @@ app.on('ready', () => {
   // Connect custom menu to app.
   Menu.setApplicationMenu(customMenu);
 
-  // Check for updates on our GitHub repository.
-  // autoUpdater.checkForUpdatesAndNotify();
-  autoUpdater.checkForUpdates();
-
   // Remove main window from memory on close (to prevent memory leak).
   mainWindow.on('closed', () => {
     mainWindow = null
   });
 });
 
-autoUpdater.on('checking-for-update', () => {
-  mainWindow.webContents.send('checking-for-update');
+// Catch update status events from autoUpdater and send corresponding events to renderer (display notifications). 
+autoUpdater.on('update-not-available', () => {
+  mainWindow.webContents.send('update-not-available');
 });
 
-// autoUpdater.on('update-available', () => {});
-// autoUpdater.on('update-not-available', () => {});
+autoUpdater.on('update-available', () => {
+  mainWindow.webContents.send('update-available');
+});
+
+autoUpdater.on('update-downloaded', () => {
+  mainWindow.webContents.send('update-downloaded');
+});
+
 // autoUpdater.on('download-progress', () => {});
-// autoUpdater.on('update-downloaded', () => {});
 // autoUpdater.on('update-cancelled', () => {});
 // autoUpdater.on('error', () => {});
 

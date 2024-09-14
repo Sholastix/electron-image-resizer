@@ -61,7 +61,7 @@ const alertInfo = (message) => {
       duration: 3000,
       close: false,
       style: {
-        backgroundColor: 'orange',
+        backgroundColor: 'burlywood',
         color: 'white',
         fontSize: '1.6rem',
         padding: '0.5rem',
@@ -139,13 +139,22 @@ const sendImage = (event) => {
   };
 };
 
+// Display auto-update status notifications (catch update status events from main process).
 ipcRenderer.on('checking-for-update', () => {
   alertInfo('Checking for update...');
 });
 
-// ipcRenderer.on('update-downloaded', () => {
-//   alertInfo('Application updated.');
-// });
+ipcRenderer.on('update-not-available', () => {
+  alertInfo('ImageResizer is up to date.');
+});
+
+ipcRenderer.on('update-available', () => {
+  alertInfo('Update available.');
+});
+
+ipcRenderer.on('update-downloaded', () => {
+  alertInfo('Application has been updated.');
+});
 
 // Set event listener to image loading.
 img.addEventListener('change', loadImage);
