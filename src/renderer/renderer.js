@@ -145,16 +145,20 @@ ipcRenderer.on('checking-for-update', () => {
 });
 
 ipcRenderer.on('update-not-available', () => {
-  alertInfo('ImageResizer is up to date.');
+  alertInfo('\'ImageResize\' is up to date.');
 });
 
 ipcRenderer.on('update-available', () => {
-  alertInfo('Update available.');
+  alertInfo('Update available. Downloading...');
 });
 
 ipcRenderer.on('update-downloaded', () => {
-  alertInfo('Application has been updated.');
+  alertInfo('Update downloaded. Changes will be applied after restart.');
 });
+
+// ipcRenderer.on('download-progress', (progress) => {
+//   alertInfo(`Progress: ${progress}`);
+// });
 
 // Set event listener to image loading.
 img.addEventListener('change', loadImage);

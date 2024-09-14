@@ -27,7 +27,7 @@
       "icon": "assets/icons/icon.ico"
     },
     "nsis": {
-      "artifactName": "ImageResizer.exe",
+      "artifactName": "ImageResizer-1.0.0.exe",
       "oneClick": "false",
       "installerIcon": "assets/icons/icon.ico",
       "uninstallerIcon": "assets/icons/icon.ico",

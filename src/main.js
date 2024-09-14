@@ -2,7 +2,7 @@ const os = require('os');
 const path = require('path');
 const jimp = require('jimp');
 const { app, BrowserWindow, Menu, ipcMain, shell } = require('electron');
-const { autoUpdater, AppUpdater } = require('electron-updater');
+const { autoUpdater } = require('electron-updater');
 
 // Set environment.
 process.env.NODE_ENV = 'production';
@@ -17,8 +17,8 @@ let mainWindow;
 
 // -------------------- APP AUTO-UPDATE FLAGS - START --------------------
 
-// Disable update's auto-download (if new update available).
-autoUpdater.autoDownload = false;
+// // Disable update's auto-download (if new update available).
+// autoUpdater.autoDownload = false;
 // Enable automatic install of downloaded update on app quit (basically, silent update).
 autoUpdater.autoInstallOnAppQuit = true;
 
@@ -99,7 +99,9 @@ autoUpdater.on('update-downloaded', () => {
   mainWindow.webContents.send('update-downloaded');
 });
 
-// autoUpdater.on('download-progress', () => {});
+// autoUpdater.on('download-progress', () => {
+//   mainWindow.webContents.send('download-progress');
+// });
 // autoUpdater.on('update-cancelled', () => {});
 // autoUpdater.on('error', () => {});
 
