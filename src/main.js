@@ -17,7 +17,7 @@ const isDevMode = process.env.NODE_ENV !== 'production';
 const isMacOS = process.platform === 'darwin';
 
 // // Change path to log file.
-// log.transports.file.resolvePathFn = () => path.join(APP_DATA, 'logs/main.log');
+// log.transports.file.resolvePathFn = () => path.join(process.env.APP_PATH, 'logs/main.log');
 
 let mainWindow;
 
@@ -56,6 +56,7 @@ const createMainWindow = () => {
   mainWindow.once('ready-to-show', () => {
     if (!isDevMode) {
       autoUpdater.checkForUpdatesAndNotify();
+      log.info('Checking for update...');
       mainWindow.webContents.send('checking-for-update');
     };
   });
@@ -94,25 +95,36 @@ app.on('ready', () => {
   });
 });
 
+// -------------------- APP AUTO-UPDATE EVENTS - START --------------------
+
 // Catch update status events from autoUpdater and send corresponding events to renderer (display notifications). 
 autoUpdater.on('update-not-available', () => {
+  log.info('\'ImageResize\' is up to date.');
   mainWindow.webContents.send('update-not-available');
 });
 
 autoUpdater.on('update-available', () => {
+  log.info('Update available. Downloading...');
   mainWindow.webContents.send('update-available');
 });
 
 autoUpdater.on('update-downloaded', () => {
+  log.info('Update downloaded. Changes will be applied after restart.');
   mainWindow.webContents.send('update-downloaded');
 });
 
 autoUpdater.on('download-progress', (info) => {
+  log.info(`Download progress: ${info.percent.toFixed(2)}`);
   mainWindow.webContents.send('download-progress', info.percent.toFixed(2));
 });
 
+autoUpdater.on('error', (err) => {
+  log.error('Auto-update error: ' + err);
+});
+
 // autoUpdater.on('update-cancelled', () => {});
-// autoUpdater.on('error', () => {});
+
+// -------------------- APP AUTO-UPDATE EVENTS - END --------------------
 
 // Implementation of custom window menu from our template.
 const customMenu = Menu.buildFromTemplate([
