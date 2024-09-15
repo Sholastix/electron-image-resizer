@@ -99,9 +99,10 @@ autoUpdater.on('update-downloaded', () => {
   mainWindow.webContents.send('update-downloaded');
 });
 
-// autoUpdater.on('download-progress', () => {
-//   mainWindow.webContents.send('download-progress');
-// });
+autoUpdater.on('download-progress', (info) => {
+  mainWindow.webContents.send('download-progress', info.percent.toFixed(2));
+});
+
 // autoUpdater.on('update-cancelled', () => {});
 // autoUpdater.on('error', () => {});
 

@@ -156,9 +156,9 @@ ipcRenderer.on('update-downloaded', () => {
   alertInfo('Update downloaded. Changes will be applied after restart.');
 });
 
-// ipcRenderer.on('download-progress', (progress) => {
-//   alertInfo(`Progress: ${progress}`);
-// });
+ipcRenderer.on('download-progress', (percent) => {
+  alertInfo(`Progress: ${percent}`);
+});
 
 // Set event listener to image loading.
 img.addEventListener('change', loadImage);
