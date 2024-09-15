@@ -1,17 +1,23 @@
+require('dotenv').config();
 const os = require('os');
 const path = require('path');
 const jimp = require('jimp');
+const log = require('electron-log');
 const { app, BrowserWindow, Menu, ipcMain, shell } = require('electron');
 const { autoUpdater } = require('electron-updater');
 
 // Set environment.
 process.env.NODE_ENV = 'production';
+// process.env.NODE_ENV = 'development';
 
 // Check if we in development mode.
 const isDevMode = process.env.NODE_ENV !== 'production';
 
 // Check if we on MacOS.
 const isMacOS = process.platform === 'darwin';
+
+// // Change path to log file.
+// log.transports.file.resolvePathFn = () => path.join(APP_DATA, 'logs/main.log');
 
 let mainWindow;
 
@@ -48,8 +54,10 @@ const createMainWindow = () => {
 
   // Automatic check for updates on our GitHub repository.
   mainWindow.once('ready-to-show', () => {
-    autoUpdater.checkForUpdatesAndNotify();
-    mainWindow.webContents.send('checking-for-update');
+    if (!isDevMode) {
+      autoUpdater.checkForUpdatesAndNotify();
+      mainWindow.webContents.send('checking-for-update');
+    };
   });
 };
 
