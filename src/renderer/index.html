@@ -35,6 +35,20 @@
       </div>
     </form>
   </div>
+
+  <div id="update-notification" class="hidden">
+    <div class="update-notification-buttons-close">
+      <button id="close-button" onClick="closeNotification()">
+        &#10006;
+      </button>
+    </div>
+    <p id="message"></p>
+    <div class="update-notification-buttons-restart">
+      <button id="restart-button" onClick="restartApp()" class="hidden">
+        Restart
+      </button>
+    </div>
+  </div>
 </body>
 
 </html>

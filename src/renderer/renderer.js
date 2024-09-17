@@ -5,6 +5,12 @@ const heightInput = document.querySelector('#height');
 const filename = document.querySelector('#filename');
 const outputPath = document.querySelector('#output-path');
 
+// Update dialog variables.
+const closeButton = document.querySelector('#close-button');
+const message = document.querySelector('#message');
+const restartButton = document.querySelector('#restart-button');
+const updateNotification = document.querySelector('#update-notification');
+
 // Function to check if selected file is image.
 const isImage = (file) => {
   try {
@@ -43,25 +49,6 @@ const alertSuccess = (message) => {
       close: false,
       style: {
         backgroundColor: 'green',
-        color: 'white',
-        fontSize: '1.6rem',
-        padding: '0.5rem',
-        textAlign: 'center'
-      },
-    });
-  } catch (err) {
-    console.error(err);
-  };
-};
-
-const alertInfo = (message) => {
-  try {
-    Toastify.toast({
-      text: message,
-      duration: 3000,
-      close: false,
-      style: {
-        backgroundColor: 'burlywood',
         color: 'white',
         fontSize: '1.6rem',
         padding: '0.5rem',
@@ -141,23 +128,34 @@ const sendImage = (event) => {
 
 // Display auto-update status notifications (catch update status events from main process).
 ipcRenderer.on('checking-for-update', () => {
-  alertInfo('Checking for update...');
+  message.innerText = 'Checking for update...';
+  updateNotification.classList.remove('hidden');
+  // ipcRenderer.removeAllListeners('checking-for-update');
 });
 
 ipcRenderer.on('update-not-available', () => {
-  alertInfo('\'ImageResize\' is up to date.');
+  message.innerText = '\'ImageResize\' is up to date.';
+  updateNotification.classList.remove('hidden');
+  // ipcRenderer.removeAllListeners('update-not-available');
 });
 
 ipcRenderer.on('update-available', () => {
-  alertInfo('Update available. Downloading...');
-});
-
-ipcRenderer.on('update-downloaded', () => {
-  alertInfo('Update downloaded. Changes will be applied after restart.');
+  message.innerText = 'Update available.';
+  updateNotification.classList.remove('hidden');
+  // ipcRenderer.removeAllListeners('update-available');
 });
 
 ipcRenderer.on('download-progress', (percent) => {
-  alertInfo(`Progress: ${percent}`);
+  message.innerText = `Downloading: ${percent}`;
+  updateNotification.classList.remove('hidden');
+  // ipcRenderer.removeAllListeners('download-progress');
+});
+
+ipcRenderer.on('update-downloaded', () => {
+  message.innerText = 'Update downloaded. Changes will be applied after restart.';
+  restartButton.classList.remove('hidden');
+  updateNotification.classList.remove('hidden');
+  // ipcRenderer.removeAllListeners('update-downloaded');
 });
 
 // Set event listener to image loading.
