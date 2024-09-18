@@ -11,16 +11,6 @@ const message = document.querySelector('#message');
 const restartButton = document.querySelector('#restart-button');
 const updateNotification = document.querySelector('#update-notification');
 
-// Function to check if selected file is image.
-const isImage = (file) => {
-  try {
-    const allowedFileTypes = ['image/gif', 'image/png', 'image/jpeg'];
-    return file && allowedFileTypes.includes(file['type']);
-  } catch (err) {
-    console.error(err);
-  };
-};
-
 // Function to display alerts.
 const alertError = (message) => {
   try {
@@ -55,6 +45,16 @@ const alertSuccess = (message) => {
         textAlign: 'center'
       },
     });
+  } catch (err) {
+    console.error(err);
+  };
+};
+
+// Function to check if selected file is image.
+const isImage = (file) => {
+  try {
+    const allowedFileTypes = ['image/gif', 'image/png', 'image/jpeg'];
+    return file && allowedFileTypes.includes(file['type']);
   } catch (err) {
     console.error(err);
   };
@@ -157,6 +157,22 @@ ipcRenderer.on('update-downloaded', () => {
   updateNotification.classList.remove('hidden');
   // ipcRenderer.removeAllListeners('update-downloaded');
 });
+
+// Function to close update notification window.
+const closeNotification = () => {
+  updateNotification.classList.add('hidden');
+};
+
+// Connect function to 'X' button.
+closeButton.onclick = closeNotification;
+
+// Function to restart app after update.
+const restartApp = () => {
+  ipcRenderer.send('restart-app');
+};
+
+// Connect function to 'Restart' button.
+restartButton.onclick = restartApp;
 
 // Set event listener to image loading.
 img.addEventListener('change', loadImage);

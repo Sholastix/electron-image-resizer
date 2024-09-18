@@ -206,11 +206,16 @@ const resizeImage = async (options) => {
   };
 };
 
-// Response to ipcRenderer resize event.
+// Response to ipcRenderer 'resize' event from "renderer.js".
 ipcMain.on('resize', (event, options) => {
   // Here we adding final destination for resized image to 'options' object.
   options.destination = path.join(os.homedir(), 'ImageReziser');
   resizeImage(options);
+});
+
+// Response to ipcRenderer 'restart-app' event from "renderer.js".
+ipcMain.on('restart-app', () => {
+  autoUpdater.quitAndInstall();
 });
 
 // This part for MacOS.
