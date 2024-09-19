@@ -134,7 +134,7 @@ ipcRenderer.on('checking-for-update', () => {
 });
 
 ipcRenderer.on('update-not-available', () => {
-  updateNotificationMessage.innerText = '\'ImageResize\' is up to date.';
+  updateNotificationMessage.innerText = '\'ImageResizer\' is up to date.';
   updateNotification.classList.remove('hidden');
   updateNotification.classList.add('visible');
   // ipcRenderer.removeAllListeners('update-not-available');
