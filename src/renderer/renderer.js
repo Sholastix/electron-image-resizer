@@ -6,10 +6,9 @@ const filename = document.querySelector('#filename');
 const outputPath = document.querySelector('#output-path');
 
 // Update dialog variables.
-const closeButton = document.querySelector('#close-button');
-const message = document.querySelector('#message');
-const restartButton = document.querySelector('#restart-button');
 const updateNotification = document.querySelector('#update-notification');
+const updateNotificationMessage = document.querySelector('#update-notification-message');
+const closeButton = document.querySelector('#close-button');
 
 // Function to display alerts.
 const alertError = (message) => {
@@ -128,51 +127,48 @@ const sendImage = (event) => {
 
 // Display auto-update status notifications (catch update status events from main process).
 ipcRenderer.on('checking-for-update', () => {
-  message.innerText = 'Checking for update...';
+  updateNotificationMessage.innerText = 'Checking for update...';
   updateNotification.classList.remove('hidden');
+  updateNotification.classList.add('visible');
   // ipcRenderer.removeAllListeners('checking-for-update');
 });
 
 ipcRenderer.on('update-not-available', () => {
-  message.innerText = '\'ImageResize\' is up to date.';
+  updateNotificationMessage.innerText = '\'ImageResize\' is up to date.';
   updateNotification.classList.remove('hidden');
+  updateNotification.classList.add('visible');
   // ipcRenderer.removeAllListeners('update-not-available');
 });
 
 ipcRenderer.on('update-available', () => {
-  message.innerText = 'Update available.';
+  updateNotificationMessage.innerText = 'Update available.';
   updateNotification.classList.remove('hidden');
+  updateNotification.classList.add('visible');
   // ipcRenderer.removeAllListeners('update-available');
 });
 
 ipcRenderer.on('download-progress', (percent) => {
-  message.innerText = `Downloading: ${percent}`;
+  updateNotificationMessage.innerText = `Downloading: ${percent}`;
   updateNotification.classList.remove('hidden');
+  updateNotification.classList.add('visible');
   // ipcRenderer.removeAllListeners('download-progress');
 });
 
 ipcRenderer.on('update-downloaded', () => {
-  message.innerText = 'Update downloaded. Changes will be applied after restart.';
-  restartButton.classList.remove('hidden');
+  updateNotificationMessage.innerText = 'Update downloaded. Changes will be applied after restart.';
   updateNotification.classList.remove('hidden');
+  updateNotification.classList.add('visible');
   // ipcRenderer.removeAllListeners('update-downloaded');
 });
 
 // Function to close update notification window.
 const closeNotification = () => {
+  updateNotification.classList.remove('visible');
   updateNotification.classList.add('hidden');
 };
 
-// Connect function to 'X' button.
+// Connect function to 'x' button (close update notification window).
 closeButton.onclick = closeNotification;
-
-// Function to restart app after update.
-const restartApp = () => {
-  ipcRenderer.send('restart-app');
-};
-
-// Connect function to 'Restart' button.
-restartButton.onclick = restartApp;
 
 // Set event listener to image loading.
 img.addEventListener('change', loadImage);
