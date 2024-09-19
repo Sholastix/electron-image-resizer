@@ -19,7 +19,7 @@
     "directories": {
       "output": "dist"
     },
-    "appId": "ImageResizer",
+    "appId": "com.electron.ImageResizer",
     "win": {
       "target": [
         "nsis"

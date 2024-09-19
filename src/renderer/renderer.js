@@ -148,14 +148,14 @@ ipcRenderer.on('update-available', () => {
 });
 
 ipcRenderer.on('download-progress', (percent) => {
-  updateNotificationMessage.innerText = `Downloading: ${percent}`;
+  updateNotificationMessage.innerText = `${percent}`;
   updateNotification.classList.remove('hidden');
   updateNotification.classList.add('visible');
   // ipcRenderer.removeAllListeners('download-progress');
 });
 
 ipcRenderer.on('update-downloaded', () => {
-  updateNotificationMessage.innerText = 'Update downloaded. Changes will be applied after restart.';
+  updateNotificationMessage.innerText = 'Download complete. Changes will be applied after restart.';
   updateNotification.classList.remove('hidden');
   updateNotification.classList.add('visible');
   // ipcRenderer.removeAllListeners('update-downloaded');

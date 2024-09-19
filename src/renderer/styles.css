@@ -124,16 +124,16 @@ body {
   border-radius: 0.5rem;
   box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
   font-size: 1.4rem;
-  padding: 0.5rem 0.5rem 1rem;
+  padding: 0.5rem;
   position: fixed;
   right: 0.5rem;
   text-align: center;
   top: 0.5rem;
-  width: 18rem;
+  width: 15rem;
 }
 
 #update-notification-message {
-  margin: 0.5rem 0rem;
+  margin: 0rem 1.5rem 0.5rem;
 }
 
 .update-notification-buttons-close {
@@ -150,7 +150,7 @@ body {
 
 .update-notification-buttons-close button:hover {
   box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.3);
-  color: red;
+  color: rgb(231, 36, 36);
   cursor: pointer;
 }
 

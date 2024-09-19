@@ -99,7 +99,7 @@ app.on('ready', () => {
 
 // Catch update status events from autoUpdater and send corresponding events to renderer (display notifications). 
 autoUpdater.on('update-not-available', () => {
-  log.info('\'ImageResize\' is up to date.');
+  log.info('\'ImageResizer\' is up to date.');
   mainWindow.webContents.send('update-not-available');
 });
 
@@ -108,14 +108,14 @@ autoUpdater.on('update-available', () => {
   mainWindow.webContents.send('update-available');
 });
 
-autoUpdater.on('update-downloaded', () => {
-  log.info('Update downloaded. Changes will be applied after restart.');
-  mainWindow.webContents.send('update-downloaded');
+autoUpdater.on('download-progress', (info) => {
+  log.info(`${info.percent.toFixed(2)}`);
+  mainWindow.webContents.send('download-progress', info.percent.toFixed(2));
 });
 
-autoUpdater.on('download-progress', (info) => {
-  log.info(`Download progress: ${info.percent.toFixed(2)}`);
-  mainWindow.webContents.send('download-progress', info.percent.toFixed(2));
+autoUpdater.on('update-downloaded', () => {
+  log.info('Download complete. Changes will be applied after restart.');
+  mainWindow.webContents.send('update-downloaded');
 });
 
 autoUpdater.on('error', (err) => {
@@ -211,11 +211,6 @@ ipcMain.on('resize', (event, options) => {
   // Here we adding final destination for resized image to 'options' object.
   options.destination = path.join(os.homedir(), 'ImageReziser');
   resizeImage(options);
-});
-
-// Response to ipcRenderer 'restart-app' event from "renderer.js".
-ipcMain.on('restart-app', () => {
-  autoUpdater.quitAndInstall();
 });
 
 // This part for MacOS.
