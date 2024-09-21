@@ -7,8 +7,8 @@ const { app, BrowserWindow, Menu, ipcMain, shell } = require('electron');
 const { autoUpdater } = require('electron-updater');
 
 // Set environment.
-process.env.NODE_ENV = 'production';
 // process.env.NODE_ENV = 'development';
+process.env.NODE_ENV = 'production';
 
 // Check if we in development mode.
 const isDevMode = process.env.NODE_ENV !== 'production';
@@ -16,15 +16,17 @@ const isDevMode = process.env.NODE_ENV !== 'production';
 // Check if we on MacOS.
 const isMacOS = process.platform === 'darwin';
 
-// // Change path to log file.
-// log.transports.file.resolvePathFn = () => path.join(process.env.APP_PATH, 'logs/main.log');
+// Change path to log file in development mode.
+if (isDevMode) {
+  log.transports.file.resolvePathFn = () => path.join(process.env.APP_PATH, 'logs/main.log');
+};
 
 let mainWindow;
 
 // -------------------- APP AUTO-UPDATE FLAGS - START --------------------
 
-// // Disable update's auto-download (if new update available).
-// autoUpdater.autoDownload = false;
+// Disable update's auto-download (if new update available).
+autoUpdater.autoDownload = false;
 // Enable automatic install of downloaded update on app quit (basically, silent update).
 autoUpdater.autoInstallOnAppQuit = true;
 
@@ -54,11 +56,9 @@ const createMainWindow = () => {
 
   // Automatic check for updates on our GitHub repository.
   mainWindow.once('ready-to-show', () => {
-    if (!isDevMode) {
-      autoUpdater.checkForUpdatesAndNotify();
-      log.info('Checking for update...');
-      mainWindow.webContents.send('checking-for-update');
-    };
+    autoUpdater.checkForUpdatesAndNotify();
+    log.info('Checking for update...');
+    mainWindow.webContents.send('checking-for-update');
   });
 };
 
@@ -104,18 +104,29 @@ autoUpdater.on('update-not-available', () => {
 });
 
 autoUpdater.on('update-available', () => {
-  log.info('Update available. Downloading...');
+  log.info('Update available. Download now?');
   mainWindow.webContents.send('update-available');
-});
 
-autoUpdater.on('download-progress', (info) => {
-  log.info(`${info.percent.toFixed(2)}`);
-  mainWindow.webContents.send('download-progress', info.percent.toFixed(2));
-});
+  ipcMain.handle('update-choice', (event, options) => {
+    log.info(options);
 
-autoUpdater.on('update-downloaded', () => {
-  log.info('Download complete. Changes will be applied after restart.');
-  mainWindow.webContents.send('update-downloaded');
+    if (options === 'yes') {
+      autoUpdater.downloadUpdate();
+
+      autoUpdater.on('download-progress', (info) => {
+        log.info(`${info.percent.toFixed(2)}`);
+        mainWindow.webContents.send('download-progress', info.percent.toFixed(2));
+      });
+
+      autoUpdater.on('update-downloaded', () => {
+        log.info('Download complete. Changes will be applied after restart.');
+        mainWindow.webContents.send('update-downloaded');
+      });
+    } else {
+      log.info('Download rejected.');
+      mainWindow.webContents.send('download-decline');
+    };
+  });
 });
 
 autoUpdater.on('error', (err) => {

@@ -154,6 +154,34 @@ body {
   cursor: pointer;
 }
 
+#yes-button {
+  background-color: white;
+  border: none;
+  font-size: 1.6rem;
+  padding: 0rem 0.2rem;
+  margin: 0rem 0.5rem;
+}
+
+#yes-button:hover {
+  color: rgb(136, 226, 0);
+  cursor: pointer;
+  font-weight: bold;
+}
+
+#no-button {
+  background-color: white;
+  border: none;
+  font-size: 1.6rem;
+  padding: 0rem 0.2rem;
+  margin: 0rem 0.5rem;
+}
+
+#no-button:hover {
+  color: red;
+  cursor: pointer;
+  font-weight: bold;
+}
+
 .hidden {
   display: none;
 }

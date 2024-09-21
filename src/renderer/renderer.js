@@ -9,6 +9,8 @@ const outputPath = document.querySelector('#output-path');
 const updateNotification = document.querySelector('#update-notification');
 const updateNotificationMessage = document.querySelector('#update-notification-message');
 const closeButton = document.querySelector('#close-button');
+const yesButton = document.querySelector('#yes-button');
+const noButton = document.querySelector('#no-button');
 
 // Function to display alerts.
 const alertError = (message) => {
@@ -79,7 +81,7 @@ const loadImage = (event) => {
     image.src = URL.createObjectURL(file);
     image.onload = function () {
       widthInput.value = this.width,
-      heightInput.value = this.height
+        heightInput.value = this.height
     };
   } catch (err) {
     console.error(err);
@@ -141,13 +143,26 @@ ipcRenderer.on('update-not-available', () => {
 });
 
 ipcRenderer.on('update-available', () => {
-  updateNotificationMessage.innerText = 'Update available.';
+  yesButton.classList.remove('hidden');
+  noButton.classList.remove('hidden');
+  updateNotificationMessage.innerText = 'Update available. Download now?';
   updateNotification.classList.remove('hidden');
   updateNotification.classList.add('visible');
   // ipcRenderer.removeAllListeners('update-available');
 });
 
+// Close update notification window after declining update download.
+ipcRenderer.on('download-decline', () => {
+  yesButton.classList.add('hidden');
+  noButton.classList.add('hidden');
+
+  updateNotification.classList.remove('visible');
+  updateNotification.classList.add('hidden');
+});
+
 ipcRenderer.on('download-progress', (percent) => {
+  yesButton.classList.add('hidden');
+  noButton.classList.add('hidden');
   updateNotificationMessage.innerText = `${percent}`;
   updateNotification.classList.remove('hidden');
   updateNotification.classList.add('visible');
@@ -155,6 +170,8 @@ ipcRenderer.on('download-progress', (percent) => {
 });
 
 ipcRenderer.on('update-downloaded', () => {
+  yesButton.classList.add('hidden');
+  noButton.classList.add('hidden');
   updateNotificationMessage.innerText = 'Download complete. Changes will be applied after restart.';
   updateNotification.classList.remove('hidden');
   updateNotification.classList.add('visible');
@@ -169,6 +186,22 @@ const closeNotification = () => {
 
 // Connect function to 'x' button (close update notification window).
 closeButton.onclick = closeNotification;
+
+// Function for button 'YES'.
+const yesToDownload = () => {
+  ipcRenderer.invoke('update-choice', 'yes');
+};
+
+// Connect function to 'YES' button (agree to download an update).
+yesButton.onclick = yesToDownload;
+
+// Function for button 'NO'.
+const noToDownload = () => {
+  ipcRenderer.invoke('update-choice', 'no');
+};
+
+// Connect function to 'NO' button (don't agree to download an update).
+noButton.onclick = noToDownload;
 
 // Set event listener to image loading.
 img.addEventListener('change', loadImage);
