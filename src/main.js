@@ -99,7 +99,7 @@ app.on('ready', () => {
 
 // Catch update status events from autoUpdater and send corresponding events to renderer (display notifications). 
 autoUpdater.on('update-not-available', () => {
-  log.info('\'ImageResizer\' is up to date.');
+  log.info('ImageResizer is up to date.');
   mainWindow.webContents.send('update-not-available');
 });
 
@@ -108,13 +108,12 @@ autoUpdater.on('update-available', () => {
   mainWindow.webContents.send('update-available');
 
   ipcMain.handle('update-choice', (event, options) => {
-    log.info(options);
-
     if (options === 'yes') {
       autoUpdater.downloadUpdate();
+      log.info('Download accepted.');
 
       autoUpdater.on('download-progress', (info) => {
-        log.info(`${info.percent.toFixed(2)}`);
+        log.info(`Progress, %: ${info.percent.toFixed(2)}`);
         mainWindow.webContents.send('download-progress', info.percent.toFixed(2));
       });
 

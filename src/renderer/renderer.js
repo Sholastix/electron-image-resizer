@@ -136,16 +136,16 @@ ipcRenderer.on('checking-for-update', () => {
 });
 
 ipcRenderer.on('update-not-available', () => {
-  updateNotificationMessage.innerText = '\'ImageResizer\' is up to date.';
+  updateNotificationMessage.innerText = 'ImageResizer is up to date.';
   updateNotification.classList.remove('hidden');
   updateNotification.classList.add('visible');
   // ipcRenderer.removeAllListeners('update-not-available');
 });
 
 ipcRenderer.on('update-available', () => {
+  updateNotificationMessage.innerText = 'Update available. Download now?';
   yesButton.classList.remove('hidden');
   noButton.classList.remove('hidden');
-  updateNotificationMessage.innerText = 'Update available. Download now?';
   updateNotification.classList.remove('hidden');
   updateNotification.classList.add('visible');
   // ipcRenderer.removeAllListeners('update-available');
@@ -153,26 +153,23 @@ ipcRenderer.on('update-available', () => {
 
 // Close update notification window after declining update download.
 ipcRenderer.on('download-decline', () => {
-  yesButton.classList.add('hidden');
-  noButton.classList.add('hidden');
-
   updateNotification.classList.remove('visible');
   updateNotification.classList.add('hidden');
 });
 
 ipcRenderer.on('download-progress', (percent) => {
+  updateNotificationMessage.innerText = `Progress, %: ${percent}`;
   yesButton.classList.add('hidden');
   noButton.classList.add('hidden');
-  updateNotificationMessage.innerText = `${percent}`;
   updateNotification.classList.remove('hidden');
   updateNotification.classList.add('visible');
   // ipcRenderer.removeAllListeners('download-progress');
 });
 
 ipcRenderer.on('update-downloaded', () => {
+  updateNotificationMessage.innerText = 'Download complete. Changes will be applied after restart.';
   yesButton.classList.add('hidden');
   noButton.classList.add('hidden');
-  updateNotificationMessage.innerText = 'Download complete. Changes will be applied after restart.';
   updateNotification.classList.remove('hidden');
   updateNotification.classList.add('visible');
   // ipcRenderer.removeAllListeners('update-downloaded');

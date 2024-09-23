@@ -2,7 +2,10 @@
   "name": "electron-image-resizer",
   "productName": "ImageResizer",
   "version": "1.0.0",
+  "repository": "https://github.com/Sholastix/electron-image-resizer",
   "description": "App to resize dimensions of the image.",
+  "author": "Sholastix",
+  "license": "ISC",
   "main": "src/main.js",
   "scripts": {
     "start": "electron .",
@@ -10,34 +13,10 @@
     "build": "electron-builder build --win --publish never",
     "deploy": "electron-builder build --win --publish always"
   },
-  "repository": "https://github.com/Sholastix/electron-image-resizer",
   "publish": {
     "provider": "github",
     "releaseType": "release"
   },
-  "build": {
-    "directories": {
-      "output": "dist"
-    },
-    "appId": "com.electron.ImageResizer",
-    "win": {
-      "target": [
-        "nsis"
-      ],
-      "icon": "assets/icons/icon.ico"
-    },
-    "nsis": {
-      "artifactName": "ImageResizer-1.0.0.exe",
-      "oneClick": "false",
-      "installerIcon": "assets/icons/icon.ico",
-      "uninstallerIcon": "assets/icons/icon.ico",
-      "uninstallDisplayName": "ImageResizer",
-      "license": "license.md",
-      "allowToChangeInstallationDirectory": "true"
-    }
-  },
-  "author": "Sholastix",
-  "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",
     "electron-log": "^5.2.0",
@@ -49,5 +28,26 @@
     "electron": "^32.0.1",
     "electron-builder": "^25.0.5",
     "nodemon": "^3.1.4"
+  },
+  "build": {
+    "appId": "com.github.ImageResizer",
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "icon": "assets/icons/icon.ico"
+    },
+    "nsis": {
+      "allowToChangeInstallationDirectory": "true",
+      "oneClick": "false",
+      "artifactName": "ImageResizer-1.0.0.exe",
+      "installerIcon": "assets/icons/icon.ico",
+      "license": "license.md",
+      "uninstallDisplayName": "ImageResizer",
+      "uninstallerIcon": "assets/icons/icon.ico"
+    }
   }
 }
