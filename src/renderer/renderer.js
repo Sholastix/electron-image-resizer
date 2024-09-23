@@ -132,14 +132,14 @@ ipcRenderer.on('checking-for-update', () => {
   updateNotificationMessage.innerText = 'Checking for update...';
   updateNotification.classList.remove('hidden');
   updateNotification.classList.add('visible');
-  // ipcRenderer.removeAllListeners('checking-for-update');
+  ipcRenderer.removeAllListeners('checking-for-update');
 });
 
 ipcRenderer.on('update-not-available', () => {
   updateNotificationMessage.innerText = 'ImageResizer is up to date.';
   updateNotification.classList.remove('hidden');
   updateNotification.classList.add('visible');
-  // ipcRenderer.removeAllListeners('update-not-available');
+  ipcRenderer.removeAllListeners('update-not-available');
 });
 
 ipcRenderer.on('update-available', () => {
@@ -148,31 +148,32 @@ ipcRenderer.on('update-available', () => {
   noButton.classList.remove('hidden');
   updateNotification.classList.remove('hidden');
   updateNotification.classList.add('visible');
-  // ipcRenderer.removeAllListeners('update-available');
+  ipcRenderer.removeAllListeners('update-available');
 });
 
 // Close update notification window after declining update download.
 ipcRenderer.on('download-decline', () => {
   updateNotification.classList.remove('visible');
   updateNotification.classList.add('hidden');
+  ipcRenderer.removeAllListeners('download-decline');
 });
 
 ipcRenderer.on('download-progress', (percent) => {
-  updateNotificationMessage.innerText = `Progress, %: ${percent}`;
+  updateNotificationMessage.innerText = `Progress: ${percent}%`;
   yesButton.classList.add('hidden');
   noButton.classList.add('hidden');
   updateNotification.classList.remove('hidden');
   updateNotification.classList.add('visible');
-  // ipcRenderer.removeAllListeners('download-progress');
 });
 
 ipcRenderer.on('update-downloaded', () => {
-  updateNotificationMessage.innerText = 'Download complete. Changes will be applied after restart.';
+  updateNotificationMessage.innerText = 'Update downloaded and will be installed on app quit.';
   yesButton.classList.add('hidden');
   noButton.classList.add('hidden');
   updateNotification.classList.remove('hidden');
   updateNotification.classList.add('visible');
-  // ipcRenderer.removeAllListeners('update-downloaded');
+  ipcRenderer.removeAllListeners('update-downloaded');
+  ipcRenderer.removeAllListeners('download-progress');
 });
 
 // Function to close update notification window.

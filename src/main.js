@@ -113,12 +113,12 @@ autoUpdater.on('update-available', () => {
       log.info('Download accepted.');
 
       autoUpdater.on('download-progress', (info) => {
-        log.info(`Progress, %: ${info.percent.toFixed(2)}`);
+        log.info(`Progress: ${info.percent.toFixed(2)}%`);
         mainWindow.webContents.send('download-progress', info.percent.toFixed(2));
       });
 
       autoUpdater.on('update-downloaded', () => {
-        log.info('Download complete. Changes will be applied after restart.');
+        log.info('Update downloaded and will be installed on app quit.');
         mainWindow.webContents.send('update-downloaded');
       });
     } else {
