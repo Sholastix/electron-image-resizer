@@ -6,12 +6,8 @@ const log = require('electron-log');
 const { app, BrowserWindow, Menu, ipcMain, shell } = require('electron');
 const { autoUpdater } = require('electron-updater');
 
-// Set environment.
-// process.env.NODE_ENV = 'development';
-process.env.NODE_ENV = 'production';
-
 // Check if we in development mode.
-const isDevMode = process.env.NODE_ENV !== 'production';
+const isDevMode = !app.isPackaged;
 
 // Check if we on MacOS.
 const isMacOS = process.platform === 'darwin';
@@ -39,6 +35,7 @@ const createMainWindow = () => {
     width: 720,
     height: 480,
     resizable: false,
+    show: false, // Don't display the window immediately after it is created.
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: true,
@@ -54,8 +51,8 @@ const createMainWindow = () => {
   // Load file that will be opened in 'electron' window.
   mainWindow.loadFile(path.join(__dirname, './renderer/index.html'));
 
-  // Automatic check for updates on our GitHub repository.
-  mainWindow.once('ready-to-show', () => {
+  // Display the window (mainWindow.show) and automatic check for updates on our GitHub repository.
+  mainWindow.once('ready-to-show', mainWindow.show, () => {
     autoUpdater.checkForUpdatesAndNotify();
     log.info('Checking for update...');
     mainWindow.webContents.send('checking-for-update');
