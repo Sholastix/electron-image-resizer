@@ -43,13 +43,21 @@ const createMainWindow = () => {
     }
   });
 
+  // Load file that will be opened in 'electron' window.
+  mainWindow.loadFile(path.join(__dirname, './renderer/index.html'));
+
+  // Connect custom menu to app.
+  Menu.setApplicationMenu(customMenuBar);
+
   // Automatically opens devTools if we in development mode.
   if (isDevMode) {
     mainWindow.webContents.openDevTools();
   };
 
-  // Load file that will be opened in 'electron' window.
-  mainWindow.loadFile(path.join(__dirname, './renderer/index.html'));
+  // Connect context menu to app.
+  mainWindow.webContents.on('context-menu', () => {
+    customContextMenu.popup(mainWindow.webContents);
+  });
 
   // Display the window (mainWindow.show) and automatic check for updates on our GitHub repository.
   mainWindow.once('ready-to-show', mainWindow.show, () => {
@@ -66,10 +74,13 @@ const createAboutWindow = () => {
     title: 'About ImageReziser',
     width: 360,
     height: 240,
-    resizable: false
+    resizable: false,
+    show: false,
   });
 
   aboutWindow.loadFile(path.join(__dirname, './renderer/about.html'));
+
+  aboutWindow.once('ready-to-show', aboutWindow.show);
 };
 
 // Launches when app is ready.
@@ -82,9 +93,6 @@ app.on('ready', () => {
       createMainWindow();
     };
   });
-
-  // Connect custom menu to app.
-  Menu.setApplicationMenu(customMenu);
 
   // Remove main window from memory on close (to prevent memory leak).
   mainWindow.on('closed', () => {
@@ -134,7 +142,7 @@ autoUpdater.on('error', (err) => {
 // -------------------- APP AUTO-UPDATE EVENTS - END --------------------
 
 // Implementation of custom window menu from our template.
-const customMenu = Menu.buildFromTemplate([
+const customMenuBar = Menu.buildFromTemplate([
   // This part for MacOS.
   ...(isMacOS
     ?
@@ -177,7 +185,8 @@ const customMenu = Menu.buildFromTemplate([
     []),
 
   ...(isDevMode
-    ? [
+    ?
+    [
       {
         label: 'Developer',
         submenu: [
@@ -188,7 +197,23 @@ const customMenu = Menu.buildFromTemplate([
         ],
       },
     ]
-    : []),
+    :
+    []),
+]);
+
+// Implementation of custom context menu from our template.
+const customContextMenu = Menu.buildFromTemplate([
+  {
+    label: 'Options',
+    submenu: [
+      { role: 'undo' },
+      { role: 'redo' },
+      { type: 'separator' },
+      { role: 'cut' },
+      { role: 'copy' },
+      { role: 'paste' },
+    ]
+  },
 ]);
 
 // Function to resize image.
