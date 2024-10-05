@@ -60,7 +60,9 @@ const createMainWindow = () => {
   });
 
   // Display the window (mainWindow.show) and automatic check for updates on our GitHub repository.
-  mainWindow.once('ready-to-show', mainWindow.show, () => {
+  mainWindow.once('ready-to-show', mainWindow.show);
+
+  mainWindow.once('ready-to-show', () => {
     autoUpdater.checkForUpdatesAndNotify();
     log.info('Checking for update...');
     mainWindow.webContents.send('checking-for-update');
@@ -117,7 +119,7 @@ autoUpdater.on('update-available', () => {
       autoUpdater.downloadUpdate();
       log.info('Download accepted.');
 
-      autoUpdater.on('download-progress', (info) => {
+      autoUpdater.once('download-progress', (info) => {
         log.info(`Progress: ${info.percent.toFixed(2)}%`);
         mainWindow.webContents.send('download-progress', info.percent.toFixed(2));
       });
