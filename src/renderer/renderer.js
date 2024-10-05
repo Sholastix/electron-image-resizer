@@ -159,6 +159,7 @@ ipcRenderer.on('download-decline', () => {
 });
 
 ipcRenderer.on('download-progress', (percent) => {
+  // ipcRenderer.removeAllListeners('download-progress');
   updateNotificationMessage.innerText = `Progress: ${percent}%`;
   yesButton.classList.add('hidden');
   noButton.classList.add('hidden');
@@ -167,7 +168,6 @@ ipcRenderer.on('download-progress', (percent) => {
 });
 
 ipcRenderer.on('update-downloaded', () => {
-  // ipcRenderer.removeAllListeners('download-progress');
   ipcRenderer.removeAllListeners('update-downloaded');
   updateNotificationMessage.innerText = 'Update downloaded and will be installed on app quit.';
   yesButton.classList.add('hidden');
