@@ -167,7 +167,7 @@ ipcRenderer.on('download-progress', (percent) => {
 });
 
 ipcRenderer.on('update-downloaded', () => {
-  ipcRenderer.removeAllListeners('download-progress');
+  // ipcRenderer.removeAllListeners('download-progress');
   ipcRenderer.removeAllListeners('update-downloaded');
   updateNotificationMessage.innerText = 'Update downloaded and will be installed on app quit.';
   yesButton.classList.add('hidden');

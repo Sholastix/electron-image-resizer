@@ -119,7 +119,7 @@ autoUpdater.on('update-available', () => {
       autoUpdater.downloadUpdate();
       log.info('Download accepted.');
 
-      autoUpdater.once('download-progress', (info) => {
+      autoUpdater.on('download-progress', (info) => {
         log.info(`Progress: ${info.percent.toFixed(2)}%`);
         mainWindow.webContents.send('download-progress', info.percent.toFixed(2));
       });
